@@ -5,11 +5,14 @@ namespace App\Security;
 use App\Entity\Pot;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -51,7 +54,6 @@ class ApiAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             'token' => $request->headers->get('X-AUTH-TOKEN'),
             'id' => $request->headers->get('X-AUTH-ID')
         ];
-
         return $credentials;
     }
 
@@ -84,6 +86,19 @@ class ApiAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         return null;
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        $data = [
+            // you may want to customize or obfuscate the message first
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+
+            // or to translate this message
+            // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
+        ];
+
+        return new JsonResponse($data, 401);
     }
 
     protected function getLoginUrl()

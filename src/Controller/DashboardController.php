@@ -17,8 +17,6 @@ class DashboardController extends AbstractController
      */
     public function index(UserPasswordEncoderInterface $userPassword): Response
     {
-        $pot = new Pot();
-        dd($userPassword->encodePassword($pot, "TEST"), $pot);
         return $this->render('inc/index.html.twig', [
             'controller_name' => 'DashboardController',
         ]);
