@@ -54,16 +54,12 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=Pot::class, mappedBy="Owner")
      */
-    private $pots;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $ApiToken;
+    private $pot;
 
     public function __construct()
     {
         $this->pots = new ArrayCollection();
+        $this->pot = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,15 +174,15 @@ class User implements UserInterface
     /**
      * @return Collection|Pot[]
      */
-    public function getPots(): Collection
+    public function getPot(): Collection
     {
-        return $this->pots;
+        return $this->pot;
     }
 
     public function addPot(Pot $pot): self
     {
-        if (!$this->pots->contains($pot)) {
-            $this->pots[] = $pot;
+        if (!$this->pot->contains($pot)) {
+            $this->pot[] = $pot;
             $pot->setOwner($this);
         }
 
@@ -195,24 +191,12 @@ class User implements UserInterface
 
     public function removePot(Pot $pot): self
     {
-        if ($this->pots->removeElement($pot)) {
+        if ($this->pot->removeElement($pot)) {
             // set the owning side to null (unless already changed)
             if ($pot->getOwner() === $this) {
                 $pot->setOwner(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getApiToken(): ?string
-    {
-        return $this->ApiToken;
-    }
-
-    public function setApiToken(?string $ApiToken): self
-    {
-        $this->ApiToken = $ApiToken;
 
         return $this;
     }

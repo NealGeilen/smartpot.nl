@@ -39,7 +39,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
-    /*
+    /*pot
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('u')

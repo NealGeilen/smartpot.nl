@@ -3,14 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\PotRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PotRepository::class)
  */
-class Pot
+class Pot implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,70 +19,102 @@ class Pot
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $AddedDate;
+    private $uuid;
 
     /**
-     * @ORM\OneToMany(targetEntity=PotLog::class, mappedBy="PotId")
+     * @ORM\Column(type="json")
      */
-    private $potLogs;
+    private $roles = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pots")
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pot")
      */
     private $Owner;
-
-    public function __construct()
-    {
-        $this->potLogs = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAddedDate(): ?\DateTimeInterface
+    public function getUuid(): ?string
     {
-        return $this->AddedDate;
+        return $this->uuid;
     }
 
-    public function setAddedDate(\DateTimeInterface $AddedDate): self
+    public function setUuid(string $uuid): self
     {
-        $this->AddedDate = $AddedDate;
+        $this->uuid = $uuid;
 
         return $this;
     }
 
     /**
-     * @return Collection|PotLog[]
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
      */
-    public function getPotLogs(): Collection
+    public function getUsername(): string
     {
-        return $this->potLogs;
+        return (string) $this->uuid;
     }
 
-    public function addPotLog(PotLog $potLog): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        if (!$this->potLogs->contains($potLog)) {
-            $this->potLogs[] = $potLog;
-            $potLog->setPotId($this);
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function removePotLog(PotLog $potLog): self
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        if ($this->potLogs->removeElement($potLog)) {
-            // set the owning side to null (unless already changed)
-            if ($potLog->getPotId() === $this) {
-                $potLog->setPotId(null);
-            }
-        }
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getOwner(): ?User
