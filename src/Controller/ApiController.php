@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Pot;
+use App\Entity\PotLog;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,16 +16,44 @@ class ApiController extends AbstractController
     /**
      * @Route("/api", name="api")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         return new JsonResponse($request->request->all());
     }
 
     /**
-     * @Route("/api/{id}/addData", name="api_addData")
+     * @Route("/api/addData", name="api_addData")
      */
-    public function addData($id): Response
+    public function addData(Request $request,  EntityManagerInterface $entityManager): Response
     {
-        return new JsonResponse(["Hi--- Adding data" , $id]);
+
+        $id = $request->headers->get("X-AUTH-ID");
+
+        $Pot = $entityManager->getRepository(Pot::class)->findOneBy(["uuid" => $id]);
+
+        if ($Pot instanceof Pot){
+            $PotLog = new PotLog();
+
+            $PotLog
+                ->setHumidity($request->request->get(""))
+                ->setLuminosity($request->request->get(""))
+                ->setPH($request->request->get(""))
+                ->setResevoir($request->request->get(""))
+                ->setSoilMoistureBottom($request->request->get(""))
+                ->setSoilMoistureMiddel($request->request->get(""))
+                ->setSoilMoistureTop($request->request->get(""))
+                ->setTemperature($request->request->get(""));
+
+
+            $Pot->addPotLog($PotLog);
+
+            $entityManager->persist($PotLog);
+            $entityManager->flush();
+
+            return new JsonResponse(["Log" => $PotLog],200);
+
+        } else {
+            return new JsonResponse("Pot not found", 404);
+        }
     }
 }

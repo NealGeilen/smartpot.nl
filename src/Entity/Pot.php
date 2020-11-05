@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -38,6 +40,16 @@ class Pot implements UserInterface
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pot")
      */
     private $Owner;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PotLog::class, mappedBy="Pot")
+     */
+    private $potLogs;
+
+    public function __construct()
+    {
+        $this->potLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +137,36 @@ class Pot implements UserInterface
     public function setOwner(?User $Owner): self
     {
         $this->Owner = $Owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PotLog[]
+     */
+    public function getPotLogs(): Collection
+    {
+        return $this->potLogs;
+    }
+
+    public function addPotLog(PotLog $potLog): self
+    {
+        if (!$this->potLogs->contains($potLog)) {
+            $this->potLogs[] = $potLog;
+            $potLog->setPot($this);
+        }
+
+        return $this;
+    }
+
+    public function removePotLog(PotLog $potLog): self
+    {
+        if ($this->potLogs->removeElement($potLog)) {
+            // set the owning side to null (unless already changed)
+            if ($potLog->getPot() === $this) {
+                $potLog->setPot(null);
+            }
+        }
 
         return $this;
     }

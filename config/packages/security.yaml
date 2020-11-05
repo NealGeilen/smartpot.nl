@@ -11,8 +11,8 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\Pot
-                property: uuid
+                class: App\Entity\User
+                property: username
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         api:
@@ -44,4 +44,5 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/api, roles: ROLE_API }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/pot, roles: ROLE_USER }
+         - { path: ^/pots, roles: ROLE_USER }

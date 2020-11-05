@@ -18,12 +18,6 @@ class PotLog
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pot::class, inversedBy="potLogs")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $PotId;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $Luminosity;
@@ -63,21 +57,15 @@ class PotLog
      */
     private $Resevoir;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Pot::class, inversedBy="potLogs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Pot;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPotId(): ?Pot
-    {
-        return $this->PotId;
-    }
-
-    public function setPotId(?Pot $PotId): self
-    {
-        $this->PotId = $PotId;
-
-        return $this;
     }
 
     public function getLuminosity(): ?int
@@ -172,6 +160,18 @@ class PotLog
     public function setResevoir(int $Resevoir): self
     {
         $this->Resevoir = $Resevoir;
+
+        return $this;
+    }
+
+    public function getPot(): ?Pot
+    {
+        return $this->Pot;
+    }
+
+    public function setPot(?Pot $Pot): self
+    {
+        $this->Pot = $Pot;
 
         return $this;
     }

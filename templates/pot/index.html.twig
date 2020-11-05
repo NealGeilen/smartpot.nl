@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PotController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for pot in Pots %}
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        {{ dump(pot) }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
