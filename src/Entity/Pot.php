@@ -46,6 +46,11 @@ class Pot implements UserInterface
      */
     private $potLogs;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Name;
+
     public function __construct()
     {
         $this->potLogs = new ArrayCollection();
@@ -149,6 +154,17 @@ class Pot implements UserInterface
         return $this->potLogs;
     }
 
+    /**
+     * @return PotLog|null
+     */
+    public function getLatestPotLog(){
+        $collection = $this->getPotLogs();
+        if (count($collection) > 0){
+            return $collection[0];
+        }
+        return null;
+    }
+
     public function addPotLog(PotLog $potLog): self
     {
         if (!$this->potLogs->contains($potLog)) {
@@ -169,5 +185,21 @@ class Pot implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
+
+        return $this;
+    }
+
+    public function supportsClass(){
+        return true;
     }
 }

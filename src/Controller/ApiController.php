@@ -18,6 +18,9 @@ class ApiController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $aData = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json"), true);
+        $aData[] = $request->request->all();
+        file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
         return new JsonResponse($request->request->all());
     }
 
@@ -26,7 +29,6 @@ class ApiController extends AbstractController
      */
     public function addData(Request $request,  EntityManagerInterface $entityManager): Response
     {
-
         $id = $request->headers->get("X-AUTH-ID");
 
         $Pot = $entityManager->getRepository(Pot::class)->findOneBy(["uuid" => $id]);
@@ -46,6 +48,7 @@ class ApiController extends AbstractController
 
 
             $Pot->addPotLog($PotLog);
+
 
             $entityManager->persist($PotLog);
             $entityManager->flush();
