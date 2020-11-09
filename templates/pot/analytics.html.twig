@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PotController!{% endblock %}
+
+{% block body %}
+    <script>
+        var sJsonTimeLineData = '{{ sJsonTimeLineData|raw }}';
+    </script>
+    <div class="container">
+        <div class="card shadow text-white">
+            <div class="card-body bg-gradient-primary">
+                <canvas class="TimeLine" style="min-height: 300px"></canvas>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="/assets/js/vendor/Chart/Chart.bundle.js"></script>
+    <script src="/assets/js/vendor/Chart/driver.js"></script>
+    <script src="/assets/js/anlytics.js"></script>
+{% endblock %}

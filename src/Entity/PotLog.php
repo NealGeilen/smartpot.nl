@@ -63,6 +63,11 @@ class PotLog
      */
     private $Pot;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $addedDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +177,18 @@ class PotLog
     public function setPot(?Pot $Pot): self
     {
         $this->Pot = $Pot;
+
+        return $this;
+    }
+
+    public function getAddedDate(): ?\DateTimeInterface
+    {
+        return $this->addedDate;
+    }
+
+    public function setAddedDate(\DateTimeInterface $addedDate): self
+    {
+        $this->addedDate = $addedDate;
 
         return $this;
     }

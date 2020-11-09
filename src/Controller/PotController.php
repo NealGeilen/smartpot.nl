@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pot;
+use App\Entity\PotLog;
 use App\Entity\User;
 use App\Form\PotType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,17 +40,30 @@ class PotController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-             $entityManager = $this->getDoctrine()->getManager();
-             $entityManager->persist($pot);
-             $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pot);
+            $entityManager->flush();
         }
-
-
 
         return $this->render('pot/settings.html.twig', [
             "Pot" => $pot,
             'controller_name' => 'PotController',
             "form" => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/pot/{id}/analytics", name="potAnalytics")
+     */
+    public function potAnalytics($id,Request $request): Response
+    {
+        $pot = $this->getDoctrine()->getRepository(Pot::class)->find($id);
+        return $this->render('pot/analytics.html.twig', [
+            "Pot" => $pot,
+            "sJsonTimeLineData" => json_encode($this->getDoctrine()->getRepository(PotLog::class)->getTimeLineData($pot)),
+            "Log" => $this->getDoctrine()->getRepository(PotLog::class)->getLatestLog($pot),
+            'controller_name' => 'PotController',
         ]);
     }
 }
