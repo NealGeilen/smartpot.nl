@@ -20,13 +20,13 @@ class ApiController extends AbstractController
     {
         $aData = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json"), true);
         $string = file_get_contents('php://input');
-        json_decode($string);
+        $aResponse = json_decode($string, true);
         if (json_last_error() !== JSON_ERROR_NONE){
             return new JsonResponse("JSON NOT VALID", 400);
         }
-        $aData[] = $string;
+        $aData[] = $aResponse;
         file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
-        return new JsonResponse($string);
+        return new JsonResponse($aResponse);
     }
 
     /**
