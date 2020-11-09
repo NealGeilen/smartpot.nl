@@ -14,7 +14,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ni ni-single-02"></i></span>
             </div>
-            <input class="form-control" value="{{ last_username }}" placeholder="Gebruikersnaam" name="username" id="inputUsername" type="text" required autofocus>
+            <input class="form-control" value="{{ last_username }}" placeholder="Username" name="username" id="inputUsername" type="text" required autofocus>
         </div>
     </div>
 
@@ -23,15 +23,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
             </div>
-            <input class="form-control" placeholder="Wachtwoord" id="inputPassword" name="password" type="password" required>
+            <input class="form-control" placeholder="Password" id="inputPassword" name="password" type="password" required>
         </div>
-    </div>
-
-    <div class="custom-control custom-control-alternative custom-checkbox">
-        <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-        <label class="custom-control-label" for=" customCheckLogin">
-            <span class="text-muted">Onthouden</span>
-        </label>
     </div>
 
     <input type="hidden" name="_csrf_token"
@@ -39,7 +32,7 @@
     >
 
     <div class="text-center">
-        <button type="submit" class="btn btn-primary my-4">Inloggen</button>
+        <button type="submit" class="btn btn-primary my-4">Sign in</button>
     </div>
 </form>
 {% endblock %}

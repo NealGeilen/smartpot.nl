@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PotController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card shadow plant-background plant-background-2 text-white">
+            <div class="card-body card-plant-body">
+                <h2 class="text-white">
+                    Pot settings
+                </h2>
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

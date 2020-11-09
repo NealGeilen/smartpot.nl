@@ -7,24 +7,23 @@
         {% for pot in Pots %}
             <div class="col-md-4">
                 <div class="card shadow">
-                    <div class="card-body">
+                    <div class="card-body plant-background plant-background-1">
                         <div class="row">
-                            <div class="col-4">
-                                <img src="/assets/img/plant.jpg">
-                            </div>
-                            <div class="col-8">
+                            <div class="col-12">
                                 <div class="row">
                                     <div class="col-8">
                                         <h1>{{ pot.name }}</h1>
                                     </div>
                                     <div class="col-4">
                                         <div class="float-right">
-                                            <a class="btn btn-primary btn-fab btn-icon btn-round" href="#">
-                                                <i class="fas fa-chart-line"></i>
-                                            </a>
-                                            <a class="btn btn-primary btn-fab btn-icon btn-round" href="#">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
+                                            <div class="btn-group">
+                                                <a class="btn btn-primary btn-fab btn-icon btn-round" href="#">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </a>
+                                                <a class="btn btn-primary btn-fab btn-icon btn-round" href="{{ path('potSettings', {'id': pot.id}) }}">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -45,13 +44,13 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="display-3 text-center p-4">
+                                        <div class="display-3 text-center p-4 text-dark">
                                             23
                                             <i class="fas fa-thermometer-half"></i>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="display-3 text-center p-4">
+                                        <div class="display-3 text-center p-4 text-dark">
                                             115
                                             <i class="far fa-lightbulb"></i>
                                         </div>
@@ -63,6 +62,22 @@
                 </div>
             </div>
         {% endfor %}
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body plant-background plant-background-2">
+                    <div class="row">
+                        <div class="col-8">
+                            <h1 class="text-white">Add Pot</h1>
+                        </div>
+                        <div class="col-4">
+                            <div class="btn-group float-right">
+                                <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
