@@ -19,7 +19,7 @@ class ApiController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $aData = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json"), true);
-        $aData[] = $request->request->all();
+        $aData[] = [$request->request->all(), file_get_contents('php://input')];
         file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
         return new JsonResponse($request->request->all());
     }
