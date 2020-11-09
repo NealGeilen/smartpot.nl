@@ -24,7 +24,7 @@ class ApiController extends AbstractController
         if (json_last_error() !== JSON_ERROR_NONE){
             throw new \Exception("JSON not valid", 400);
         }
-        $aData[] = $string
+        $aData[] = $string;
         file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
         return new JsonResponse($string);
     }
