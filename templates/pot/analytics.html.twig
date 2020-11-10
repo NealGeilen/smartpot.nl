@@ -2,15 +2,23 @@
 
 {% block title %}Hello PotController!{% endblock %}
 
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('pots') }}">My Plant's</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Analytics: {{ Pot.name }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+
 {% block body %}
     <script>
         var sJsonTimeLineData = '{{ sJsonTimeLineData|raw }}';
     </script>
-    <div class="container">
-        <div class="card shadow text-white">
-            <div class="card-body bg-gradient-primary">
-                <canvas class="TimeLine" style="min-height: 300px"></canvas>
-            </div>
+    <div class="card shadow text-white">
+        <div class="card-body bg-gradient-primary">
+            <canvas class="TimeLine" style="min-height: 300px"></canvas>
         </div>
     </div>
 
