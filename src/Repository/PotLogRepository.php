@@ -65,7 +65,7 @@ class PotLogRepository extends ServiceEntityRepository
         $aResponse = $this->createQueryBuilder('p')
         ->andWhere('p.Pot = :val')
         ->setParameter('val', $pot->getId())
-        ->select(array('DATE_FORMAT(p.addedDate, \'%d-%m-%Y\') as date', 'p.Humidity', 'p.Luminosity'))
+        ->select(array('DATE_FORMAT(p.addedDate, \'%d-%m-%Y\') as date', 'SUM(p.Humidity) as Humidity', 'SUM(p.Luminosity) AS Luminosity'))
         ->orderBy("p.addedDate", "DESC")
         ->setMaxResults(14)
         ->groupBy("date")

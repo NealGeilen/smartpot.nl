@@ -160,7 +160,7 @@ class Pot implements UserInterface
     public function getLatestPotLog(){
         $collection = $this->getPotLogs();
         if (count($collection) > 0){
-            return $collection[0];
+            return $collection[(count($collection) -1)];
         }
         return new PotLog();
     }
