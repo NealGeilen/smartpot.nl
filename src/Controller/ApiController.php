@@ -26,6 +26,11 @@ class ApiController extends AbstractController
         }
         $aData[] = $aResponse;
         file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
+
+
+
+
+
         return new JsonResponse($aResponse);
     }
 
@@ -34,34 +39,36 @@ class ApiController extends AbstractController
      */
     public function addData(Request $request,  EntityManagerInterface $entityManager): Response
     {
-        $id = $request->headers->get("X-AUTH-ID");
+        if ($request->headers->has("X-AUTH-ID")){
+            $id = $request->headers->get("X-AUTH-ID");
 
-        $Pot = $entityManager->getRepository(Pot::class)->findOneBy(["uuid" => $id]);
+            $Pot = $entityManager->getRepository(Pot::class)->findOneBy(["uuid" => $id]);
 
-        if ($Pot instanceof Pot){
-            $PotLog = new PotLog();
+            if ($Pot instanceof Pot){
+                $PotLog = new PotLog();
 
-            $PotLog
-                ->setHumidity($request->request->get(""))
-                ->setLuminosity($request->request->get(""))
-                ->setPH($request->request->get(""))
-                ->setResevoir($request->request->get(""))
-                ->setSoilMoistureBottom($request->request->get(""))
-                ->setSoilMoistureMiddel($request->request->get(""))
-                ->setSoilMoistureTop($request->request->get(""))
-                ->setTemperature($request->request->get(""));
-
-
-            $Pot->addPotLog($PotLog);
+                $PotLog
+                    ->setHumidity($request->request->get("Luchtvochtigheid"))
+                    ->setLuminosity($request->request->get("Lichtsterkte"))
+                    ->setPH("")
+                    ->setResevoir("")
+                    ->setSoilMoistureBottom("")
+                    ->setSoilMoistureMiddel("")
+                    ->setSoilMoistureTop("")
+                    ->setTemperature($request->request->get("Temperatuur"));
 
 
-            $entityManager->persist($PotLog);
-            $entityManager->flush();
+                $Pot->addPotLog($PotLog);
 
-            return new JsonResponse(["Log" => $PotLog],200);
 
-        } else {
-            return new JsonResponse("Pot not found", 404);
+                $entityManager->persist($PotLog);
+                $entityManager->flush();
+
+                return new JsonResponse(["Log" => $PotLog],200);
+
+            }
         }
+        return new JsonResponse("Pot not found", 404);
+
     }
 }

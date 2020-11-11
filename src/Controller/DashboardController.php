@@ -13,17 +13,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
+
+/**
+ * @Route("/dashboard")
+ */
 class DashboardController extends AbstractController
 {
-    /**
-     * @Route("/", name="home")
-     */
-    public function index(Security $security): Response
-    {
-        if ($security->isGranted("IS_AUTHENTICATED_FULLY")){
-            return $this->redirectToRoute('pots');
-        } else {
-            return $this->redirectToRoute('app_login');
-        }
-    }
 }

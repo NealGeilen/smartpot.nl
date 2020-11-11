@@ -13,15 +13,67 @@
 
 
 {% block body %}
-    <script>
-        var sJsonTimeLineData = '{{ sJsonTimeLineData|raw }}';
-    </script>
-    <div class="card shadow text-white">
-        <div class="card-body bg-gradient-primary">
-            <canvas class="TimeLine" style="min-height: 300px"></canvas>
+        <script>
+            var sJsonTimeLineData = '{{ sJsonTimeLineData|raw }}';
+        </script>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">Current temperature</h5>
+                                <span class="h2 font-weight-bold mb-0">{{ Pot.getLatestPotLog().Temperature }}°C</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
+                                    <i class="fas fa-thermometer-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">Current luminosity</h5>
+                                <span class="h2 font-weight-bold mb-0">{{ Pot.getLatestPotLog().Luminosity }}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
+                                    <i class="far fa-lightbulb"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">Resevoir</h5>
+                                <span class="h2 font-weight-bold mb-0">{{ Pot.getLatestPotLog().Resevoir }}%</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
+                                    <i class="fas fa-tint"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
+        <div class="card shadow text-white">
+            <div class="card-body rounded bg-primary">
+                <canvas class="TimeLine" style="min-height: 300px"></canvas>
+            </div>
+        </div>
 {% endblock %}
 
 {% block js %}

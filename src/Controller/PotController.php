@@ -16,6 +16,20 @@ use Symfony\Component\Security\Core\Security;
 class PotController extends AbstractController
 {
     /**
+     * @Route("/", name="home")
+     */
+    public function Home(Security $security): Response
+    {
+        if ($security->isGranted("IS_AUTHENTICATED_FULLY")){
+            return $this->redirectToRoute('pots');
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+    }
+
+
+
+    /**
      * @Route("/pots", name="pots")
      */
     public function index(Security $security): Response
@@ -32,24 +46,31 @@ class PotController extends AbstractController
     /**
      * @Route("/pot/{id}/settings", name="potSettings")
      */
-    public function potEdit($id,Request $request): Response
+    public function potEdit($id,Request $request, Security $security): Response
     {
         $pot = $this->getDoctrine()->getRepository(Pot::class)->find($id);
-        $form = $this->createForm(PotType::class, $pot);
+        if ($pot instanceof Pot){
+            if ($pot->getOwner()->getId() === $security->getUser()->getId()){
+                $form = $this->createForm(PotType::class, $pot);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($pot);
-            $entityManager->flush();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($pot);
+                    $entityManager->flush();
+                }
+
+                return $this->render('pot/settings.html.twig', [
+                    "Pot" => $pot,
+                    'controller_name' => 'PotController',
+                    "form" => $form->createView()
+                ]);
+            }
+            throw new \Exception("Not owner", 401);
+        } else {
+            throw new \Exception("Pot not found", 404);
         }
-
-        return $this->render('pot/settings.html.twig', [
-            "Pot" => $pot,
-            'controller_name' => 'PotController',
-            "form" => $form->createView()
-        ]);
     }
 
 
