@@ -63,7 +63,8 @@ class ApiController extends AbstractController
                         ->setSoilMoistureBottom(random_int(50,100))
                         ->setSoilMoistureMiddel(random_int(50,100))
                         ->setSoilMoistureTop(random_int(50,100))
-                        ->setTemperature($aResponse["Temperatuur"]);
+                        ->setTemperature($aResponse["Temperatuur"])
+                        ->setAddedDate(new \DateTime());
 
 
                     $Pot->addPotLog($PotLog);
