@@ -162,7 +162,7 @@ class Pot implements UserInterface
         if (count($collection) > 0){
             return $collection[0];
         }
-        return null;
+        return new PotLog();
     }
 
     public function addPotLog(PotLog $potLog): self
