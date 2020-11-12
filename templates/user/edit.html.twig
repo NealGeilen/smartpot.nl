@@ -2,15 +2,37 @@
 
 {% block title %}Edit User{% endblock %}
 
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('user_index') }}">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User edit</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+
 {% block body %}
 
     <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Edit user</h1>
+                </div>
+                <div class="col-6">
+                    <div class="float-right btn-group">
+                        <a class="btn btn-primary" href="{{ path('user_index') }}"><i class="fas fa-arrow-left"></i></a>
+                        {{ include('user/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
         <div class="card-body bg-gradient-primary rounded text-white">
             {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-            <a class="btn btn-primary" href="{{ path('user_index') }}">back to list</a>
-
-            {{ include('user/_delete_form.html.twig') }}
         </div>
     </div>
 

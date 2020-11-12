@@ -51,4 +51,5 @@ security:
          - { path: ^/api, roles: ROLE_API }
          - { path: ^/pot, roles: ROLE_USER }
          - { path: ^/pots, roles: ROLE_USER }
-         - { path: ^/dashboard, roles: ROLE_ADMIN}
+         - { path: ^/dashboard/user, roles: ROLE_ADMIN}
+         - { path: ^/dashboard/pot, roles: ROLE_POT}

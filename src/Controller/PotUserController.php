@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class PotController extends AbstractController
+class PotUserController extends AbstractController
 {
     /**
      * @Route("/", name="home")
@@ -35,7 +35,7 @@ class PotController extends AbstractController
     public function index(Security $security): Response
     {
         $user = $security->getUser();
-        return $this->render('pot/index.html.twig', [
+        return $this->render('potUser/index.html.twig', [
             "Pots" => $user->getPot(),
             'controller_name' => 'PotController',
         ]);
@@ -61,7 +61,7 @@ class PotController extends AbstractController
                     $entityManager->flush();
                 }
 
-                return $this->render('pot/settings.html.twig', [
+                return $this->render('potUser/settings.html.twig', [
                     "Pot" => $pot,
                     'controller_name' => 'PotController',
                     "form" => $form->createView()
@@ -80,7 +80,7 @@ class PotController extends AbstractController
     public function potAnalytics($id,Request $request): Response
     {
         $pot = $this->getDoctrine()->getRepository(Pot::class)->find($id);
-        return $this->render('pot/analytics.html.twig', [
+        return $this->render('potUser/analytics.html.twig', [
             "Pot" => $pot,
             "sJsonTimeLineData" => json_encode($this->getDoctrine()->getRepository(PotLog::class)->getTimeLineData($pot)),
             "Log" => $this->getDoctrine()->getRepository(PotLog::class)->getLatestLog($pot),
