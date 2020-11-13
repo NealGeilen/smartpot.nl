@@ -49,7 +49,7 @@ class ApiController extends AbstractController
                 $PotLog = new PotLog();
                 $string = file_get_contents('php://input');
                 $aResponse = json_decode($string, true);
-                return new JsonResponse($aResponse);
+                return new JsonResponse($string);
                 if (
                     isset($aResponse["Luchtvochtigheid"]) &&
                     isset($aResponse["Temperatuur"]) &&
