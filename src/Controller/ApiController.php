@@ -53,17 +53,24 @@ class ApiController extends AbstractController
                 if (
                     isset($aResponse["Luchtvochtigheid"]) &&
                     isset($aResponse["Temperatuur"]) &&
-                    isset($aResponse["Lichtsterkte"])
+                    isset($aResponse["Lichtsterkte"]) &&
+                    isset($aResponse["Waterniveau"]) &&
+                    isset($aResponse["Lichtsterkte1"]) &&
+                    isset($aResponse["Lichtsterkte2"]) &&
+                    isset($aResponse["Lichtsterkte3"]) &&
+                    isset($aResponse["Grondvochtigheid"])
                 ){
                     $PotLog
                         ->setHumidity((int)$aResponse["Luchtvochtigheid"])
-                        ->setLuminosity((int)$aResponse["Lichtsterkte"])
+                        ->setLuminosity1((int)$aResponse["Lichtsterkte1"])
+                        ->setLuminosity2((int)$aResponse["Lichtsterkte1"])
+                        ->setLuminosity3((int)$aResponse["Lichtsterkte1"])
                         ->setPH(random_int(50,100))
-                        ->setResevoir(random_int(50,100))
+                        ->setResevoir((int)$aResponse["Waterniveau"])
                         ->setSoilMoistureBottom(random_int(50,100))
-                        ->setSoilMoistureMiddel(random_int(50,100))
+                        ->setSoilMoistureMiddel((int)$aResponse["Grondvochtigheid"])
                         ->setSoilMoistureTop(random_int(50,100))
-                        ->setTemperature($aResponse["Temperatuur"])
+                        ->setTemperature((int)$aResponse["Temperatuur"])
                         ->setAddedDate(new \DateTime());
 
 
