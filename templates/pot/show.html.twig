@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pot{% endblock %}
+
+{% block body %}
+    <h1>Pot</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pot.id }}</td>
+            </tr>
+            <tr>
+                <th>Uuid</th>
+                <td>{{ pot.uuid }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ pot.roles ? pot.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ pot.password }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ pot.Name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pot_index') }}">back to list</a>
+
+    <a href="{{ path('pot_edit', {'id': pot.id}) }}">edit</a>
+
+    {{ include('pot/_delete_form.html.twig') }}
+{% endblock %}

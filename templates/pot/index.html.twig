@@ -1,68 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PotController!{% endblock %}
+{% block title %}Pot index{% endblock %}
 
 {% block body %}
-    <div class="row">
-        {% for pot in Pots %}
-            <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="/assets/img/plant.jpg">
-                            </div>
-                            <div class="col-8">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h1>{{ pot.name }}</h1>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="float-right">
-                                            <a class="btn btn-primary btn-fab btn-icon btn-round" href="#">
-                                                <i class="fas fa-chart-line"></i>
-                                            </a>
-                                            <a class="btn btn-primary btn-fab btn-icon btn-round" href="#">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="progress-wrapper">
-                                            <div class="progress-info">
-                                                <div class="progress-label">
-                                                    <span>Reservoir</span>
-                                                </div>
-                                                <div class="progress-percentage">
-                                                    <span>60%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="display-3 text-center p-4">
-                                            23
-                                            <i class="fas fa-thermometer-half"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="display-3 text-center p-4">
-                                            115
-                                            <i class="far fa-lightbulb"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <h1>Pot index</h1>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Uuid</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pot in pots %}
+            <tr>
+                <td>{{ pot.id }}</td>
+                <td>{{ pot.uuid }}</td>
+                <td>{{ pot.roles ? pot.roles|json_encode : '' }}</td>
+                <td>{{ pot.password }}</td>
+                <td>{{ pot.Name }}</td>
+                <td>
+                    <a href="{{ path('pot_show', {'id': pot.id}) }}">show</a>
+                    <a href="{{ path('pot_edit', {'id': pot.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pot_new') }}">Create new</a>
 {% endblock %}

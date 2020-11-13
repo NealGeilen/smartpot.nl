@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Pot;
 use App\Entity\PotLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,4 +48,34 @@ class PotLogRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getLatestLog(Pot $pot): ?PotLog
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.Pot = :val')
+            ->setParameter('val', $pot->getId())
+            ->orderBy("p.addedDate", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getTimeLineData(Pot $pot): ?array
+    {
+        $aResponse = $this->createQueryBuilder('p')
+        ->andWhere('p.Pot = :val')
+        ->setParameter('val', $pot->getId())
+        ->select(array('DATE_FORMAT(p.addedDate, \'%d-%m-%Y\') as date', 'AVG(p.Humidity) as Humidity', 'AVG(p.Luminosity) AS Luminosity'))
+        ->orderBy("p.addedDate", "DESC")
+        ->setMaxResults(14)
+        ->groupBy("date")
+        ->getQuery()
+        ->getResult();
+        $aData = [];
+        foreach ($aResponse as $aRecord){
+            $aData[$aRecord["date"]] = $aRecord;
+        }
+
+        return $aData;
+    }
 }

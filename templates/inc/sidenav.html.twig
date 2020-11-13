@@ -1,9 +1,9 @@
-<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+<nav class="bg-gradient-primary sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header d-flex align-items-center">
-            <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
-                <img src="../../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/img/Logo.png" class="navbar-brand-img" alt="...">
             </a>
             <div class="ml-auto">
                 <!-- Sidenav toggler -->
@@ -22,12 +22,30 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../pages/calendar.html">
-                            <i class="ni ni-calendar-grid-58 text-red"></i>
-                            <span class="nav-link-text">Mijn planten</span>
+                        <a class="nav-link text-white font-weight-bold" href="{{ path('pots') }}">
+                            <i class="fas fa-seedling"></i>
+                            <span class="nav-link-text">My plant's</span>
                         </a>
                     </li>
+
+
                 </ul>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <hr class="my-3 bg-white">
+                    <h6 class="navbar-heading p-0 text-muted">
+                        <span class="docs-normal text-white">Admin Dashboard</span>
+                    </h6>
+
+                    <ul class="navbar-nav mb-md-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white font-weight-bold" href="{{ path('user_index') }}">
+                                <i class="fas fa-users"></i>
+                                <span class="nav-link-text">Users</span>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>

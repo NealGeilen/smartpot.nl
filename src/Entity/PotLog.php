@@ -20,11 +20,6 @@ class PotLog
     /**
      * @ORM\Column(type="integer")
      */
-    private $Luminosity;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $Humidity;
 
     /**
@@ -63,21 +58,29 @@ class PotLog
      */
     private $Pot;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $addedDate;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Luminosity1;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Luminosity2;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Luminosity3;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLuminosity(): ?int
-    {
-        return $this->Luminosity;
-    }
-
-    public function setLuminosity(int $Luminosity): self
-    {
-        $this->Luminosity = $Luminosity;
-
-        return $this;
     }
 
     public function getHumidity(): ?int
@@ -172,6 +175,54 @@ class PotLog
     public function setPot(?Pot $Pot): self
     {
         $this->Pot = $Pot;
+
+        return $this;
+    }
+
+    public function getAddedDate(): ?\DateTimeInterface
+    {
+        return $this->addedDate;
+    }
+
+    public function setAddedDate(\DateTimeInterface $addedDate): self
+    {
+        $this->addedDate = $addedDate;
+
+        return $this;
+    }
+
+    public function getLuminosity1(): ?int
+    {
+        return $this->Luminosity1;
+    }
+
+    public function setLuminosity1(int $Luminosity1): self
+    {
+        $this->Luminosity1 = $Luminosity1;
+
+        return $this;
+    }
+
+    public function getLuminosity2(): ?int
+    {
+        return $this->Luminosity2;
+    }
+
+    public function setLuminosity2(int $Luminosity2): self
+    {
+        $this->Luminosity2 = $Luminosity2;
+
+        return $this;
+    }
+
+    public function getLuminosity3(): ?int
+    {
+        return $this->Luminosity3;
+    }
+
+    public function setLuminosity3(int $Luminosity3): self
+    {
+        $this->Luminosity3 = $Luminosity3;
 
         return $this;
     }

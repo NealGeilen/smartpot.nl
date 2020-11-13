@@ -1,3 +1,28 @@
 img{
     max-width: 100%;
 }
+.plant-background{
+    background-color: lightblue;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.plant-background-1{
+    background-image: url("/assets/img/plant.jpg");
+}
+
+.plant-background-2{
+    background-image: url("/assets/img/plant-2.jpg");
+}
+.plant-background-3{
+    background-image: url("/assets/img/plant-3.jpg");
+}
+.plant-background-4{
+    background-image: url("/assets/img/plant-4.jpg");
+}
+
+.bg-primary{
+    background-color: #00A896!important;
+}
