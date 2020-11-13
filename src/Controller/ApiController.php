@@ -53,7 +53,6 @@ class ApiController extends AbstractController
                 if (
                     isset($aResponse["Luchtvochtigheid"]) &&
                     isset($aResponse["Temperatuur"]) &&
-                    isset($aResponse["Lichtsterkte"]) &&
                     isset($aResponse["Waterniveau"]) &&
                     isset($aResponse["Lichtsterkte1"]) &&
                     isset($aResponse["Lichtsterkte2"]) &&
