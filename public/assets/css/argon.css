@@ -3127,7 +3127,7 @@ fieldset:disabled a.btn
 {
     color: #fff;
     border-color: #00A896;
-    background-color: #324cdd;
+    background-color: rgba(5,102,141,1);
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -20237,7 +20237,7 @@ textarea[resize='horizontal']
 .form-primary .form-control
 {
     color: #fff;
-    border-color: #324cdd; 
+    border-color: #324cdd;
     background-color: rgba(50, 76, 221, .5);
 }
 .form-primary .form-control:focus
@@ -20257,7 +20257,7 @@ textarea[resize='horizontal']
 .form-primary .input-group-text
 {
     color: #fff;
-    border-color: #324cdd; 
+    border-color: #324cdd;
     background-color: rgba(50, 76, 221, .5);
 }
 
