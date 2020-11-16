@@ -44,7 +44,7 @@ MainLineChart = {
         },
         Luminosity: function (){
             if (true){
-                MainLineChart.addDataSet("Luminosity", "Luminosity", "255,255,255");
+                MainLineChart.addDataSet("Luminosity1", "Luminosity", "255,255,255");
             }
         },
     },
