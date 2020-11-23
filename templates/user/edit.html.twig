@@ -6,11 +6,11 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('user_index') }}">Users</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User edit</li>
+            <li class="breadcrumb-item"><a href="{{ path('user_edit', {"id" : user.id})}}">{{ user.username }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
         </ol>
     </nav>
 {% endblock %}
-
 
 {% block body %}
 

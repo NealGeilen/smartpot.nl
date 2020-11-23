@@ -2,12 +2,36 @@
 
 {% block title %}Edit Pot{% endblock %}
 
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('pot_index') }}">Pots</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('pot_show', {"id" : pot.id})}}">{{ pot.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block body %}
-    <h1>Edit Pot</h1>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Edit pot</h1>
+                </div>
+                <div class="col-6">
+                    <div class="float-right btn-group">
+                        <a class="btn btn-primary" href="{{ path('pot_index') }}"><i class="fas fa-arrow-left"></i></a>
+                        {{ include('pot/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
 
-    {{ include('pot/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('pot_index') }}">back to list</a>
+        </div>
+        <div class="card-body bg-gradient-primary rounded text-white">
+            {{ include('pot/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('pot/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

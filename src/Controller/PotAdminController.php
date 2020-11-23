@@ -29,30 +29,6 @@ class PotAdminController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="pot_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $pot = new Pot();
-        $form = $this->createForm(PotAdminType::class, $pot, ["Users" => $entityManager->getRepository(User::class)->findAll()]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $pot->setUuid(Uuid::v1());
-            $entityManager->persist($pot);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('pot_index');
-        }
-
-        return $this->render('pot/new.html.twig', [
-            'pot' => $pot,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="pot_show", methods={"GET"})
      */
     public function show(Pot $pot): Response
@@ -65,9 +41,9 @@ class PotAdminController extends AbstractController
     /**
      * @Route("/{id}/edit", name="pot_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Pot $pot): Response
+    public function edit(Request $request, Pot $pot, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PotAdminType::class, $pot);
+        $form = $this->createForm(PotAdminType::class, $pot, ["Users" => $entityManager->getRepository(User::class)->findAll()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

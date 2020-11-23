@@ -38,12 +38,22 @@
                     </h6>
 
                     <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                            <a class="nav-link text-white font-weight-bold" href="{{ path('user_index') }}">
-                                <i class="fas fa-users"></i>
-                                <span class="nav-link-text">Users</span>
-                            </a>
-                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white font-weight-bold" href="{{ path('user_index') }}">
+                                    <i class="fas fa-users"></i>
+                                    <span class="nav-link-text">Users</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN_POT') %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white font-weight-bold" href="{{ path('pot_index') }}">
+                                    <i class="fas fa-seedling"></i>
+                                    <span class="nav-link-text">Pots</span>
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 {% endif %}
             </div>

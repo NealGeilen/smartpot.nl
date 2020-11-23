@@ -1,41 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pot index{% endblock %}
+{% block title %}Pot dashboard{% endblock %}
+
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Pots</li>
+        </ol>
+    </nav>
+{% endblock %}
 
 {% block body %}
-    <h1>Pot index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Uuid</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pot in pots %}
-            <tr>
-                <td>{{ pot.id }}</td>
-                <td>{{ pot.uuid }}</td>
-                <td>{{ pot.roles ? pot.roles|json_encode : '' }}</td>
-                <td>{{ pot.password }}</td>
-                <td>{{ pot.Name }}</td>
-                <td>
-                    <a href="{{ path('pot_show', {'id': pot.id}) }}">show</a>
-                    <a href="{{ path('pot_edit', {'id': pot.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-body rounded bg-primary">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-light">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pot in pots %}
+                    <tr>
+                        <td>{{ pot.id }}</td>
+                        <td>{{ pot.Name }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{{ path('pot_show', {'id': pot.id}) }}"><i class="fas fa-eye"></i></a>
+                                <a class="btn btn-primary" href="{{ path('pot_edit', {'id': pot.id}) }}"><i class="fas fa-pen"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-    <a href="{{ path('pot_new') }}">Create new</a>
 {% endblock %}
