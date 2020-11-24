@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Pot;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Uid\Uuid;
 use App\Form\PotAdminType;
 use App\Repository\PotRepository;
@@ -25,6 +27,26 @@ class PotAdminController extends AbstractController
     {
         return $this->render('pot/index.html.twig', [
             'pots' => $potRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="pot_new", methods={"GET"})
+     */
+    public function new(UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $Password = sha1(random_bytes(12));
+        $Pot = new Pot();
+        $Pot
+            ->setUuid(Uuid::v1())
+            ->setPassword($passwordEncoder->encodePassword($Pot, $Password))
+            ->setName("");
+
+        $this->getDoctrine()->getManager()->persist($Pot);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('pot/new.html.twig', [
+            "Pot" => $Pot,
+            "PotPassword" => $Password
         ]);
     }
 

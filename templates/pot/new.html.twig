@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pot{% endblock %}
+
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('pot_index') }}">Pots</a></li>
+            <li class="breadcrumb-item active">New</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="alert alert-warning">
+        Details below only shown once
+    </div>
+    <div class="card">
+        <div class="card-body bg-gradient-primary rounded text-white">
+            <table class="table table-light table-hover table-striped">
+                <tr>
+                    <th>AUTH-ID</th>
+                    <td>{{ Pot.uuid }}</td>
+                </tr>
+                <tr>
+                    <th>AUTH-TOKEN</th>
+                    <td>{{ PotPassword }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
