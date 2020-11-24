@@ -8,7 +8,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                 </div>
-                {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Gebruikersnaam'}}) }}
+                {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Username'}}) }}
             </div>
         </div>
         <div class="form-group">
@@ -16,7 +16,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                 </div>
-                {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Voornaam'}}) }}
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'First name'}}) }}
             </div>
         </div>
         <div class="form-group">
@@ -24,7 +24,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                 </div>
-                {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Achternaam'}}) }}
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Last name'}}) }}
             </div>
         </div>
         <div class="form-group">
@@ -40,7 +40,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Wachtwoord'}}) }}
+                {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
             </div>
         </div>
         <div class="form-group">
@@ -48,7 +48,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Herhaal wachtwoord'}}) }}
+                {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Repeat password'}}) }}
             </div>
         </div>
         <div class="row my-4">
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary mt-4">Maak nieuw account</button>
+            <button type="submit" class="btn btn-primary mt-4">Create new account</button>
         </div>
     {{ form_end(form) }}
 {% endblock %}
