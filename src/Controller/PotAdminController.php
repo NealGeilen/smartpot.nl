@@ -43,10 +43,12 @@ class PotAdminController extends AbstractController
      */
     public function edit(Request $request, Pot $pot, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PotAdminType::class, $pot, ["Users" => $entityManager->getRepository(User::class)->findAll()]);
+        $form = $this->createForm(PotAdminType::class, $pot, ["Selected_Owner"=>$pot->getOwner(), "Users" => $entityManager->getRepository(User::class)->findAll()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $User = $this->getDoctrine()->getRepository(User::class)->find($request->request->get('pot_admin')["Owner"]);
+            $pot->setOwner($User);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('pot_index');
