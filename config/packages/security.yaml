@@ -48,8 +48,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/api, roles: ROLE_API }
-         - { path: ^/pot, roles: ROLE_USER }
-         - { path: ^/pots, roles: ROLE_USER }
-         - { path: ^/dashboard/user, roles: ROLE_ADMIN}
-         - { path: ^/dashboard/pot, roles: ROLE_ADMIN_POT}
+         - { path: ^/api, roles: ROLE_API,requires_channel: '%env(SECURE_SCHEME)%' }
+         - { path: ^/pot, roles: ROLE_USER,requires_channel: '%env(SECURE_SCHEME)%' }
+         - { path: ^/pots, roles: ROLE_USER,requires_channel: '%env(SECURE_SCHEME)%' }
+         - { path: ^/dashboard/user, roles: ROLE_ADMIN,requires_channel: '%env(SECURE_SCHEME)%'}
+         - { path: ^/dashboard/pot, roles: ROLE_ADMIN_POT,requires_channel: '%env(SECURE_SCHEME)%'}
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY,requires_channel: '%env(SECURE_SCHEME)%' }
