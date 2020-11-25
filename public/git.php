@@ -21,7 +21,7 @@ $BRANCH             = "master";
 if ( isset($_GET["payload"]) ){
     if ($_GET["payload"] = "jhdwAJKhdYT#EKJHbwdwau47"){
         echo shell_exec("cd {$LOCAL_ROOT} && git pull");
-        echo shell_exec("cd {$LOCAL_ROOT} && php bin/console cache:clear");
+        echo shell_exec("php bin/console cache:clear");
     }
 }
 ?>
