@@ -19,7 +19,6 @@ var Scanner = {
                 });
 
             } else {
-                endPageLoad();
                 addErrorMessage("Geen camera gevonden.");
             }
         }).catch(function (e) {
@@ -62,15 +61,9 @@ var Scanner = {
                     Title: "Gelukt",
                     Message: ""
                 })
-            },
-            error: function () {
-                endPageLoad();
             }
         });
     },
-    AddTicketToTable: function (aData) {
-        // $(".ticket-table").find("tbody").append("<tr><td>"+aData.Ticket.OrderedTicket_Hash+"</td><td>"+aData.Ticket.Ticket_Description+"</td><td>"+aData.Event.Event_Name+"</td></tr>")
-    }
 };
 
 $(document).ready(function () {

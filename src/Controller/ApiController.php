@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiController extends AbstractController
 {
@@ -38,7 +39,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/addData", name="api_addData")
      */
-    public function addData(Request $request,  EntityManagerInterface $entityManager): Response
+    public function addData(Request $request,  EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
     {
         if ($request->headers->has("X-AUTH-ID")){
             $id = $request->headers->get("X-AUTH-ID");
@@ -77,7 +78,7 @@ class ApiController extends AbstractController
 
                     $entityManager->persist($PotLog);
                     $entityManager->flush();
-                    return new JsonResponse(["Log" => $PotLog],200);
+                    return new JsonResponse(["Log" => $serializer->serialize($PotLog, "json")],200);
                 } else {
                     return new JsonResponse("Missing values", 400);
                 }

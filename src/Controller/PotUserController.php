@@ -55,7 +55,7 @@ class PotUserController extends AbstractController
             if ($Pot instanceof Pot){
                 $Pot->setOwner($security->getUser());
                 $this->getDoctrine()->getManager()->flush();
-                return new JsonResponse($serializer->serialize($Pot, "json"), 202);
+                return new JsonResponse(["id" => $Pot->getId()], 202);
             } else {
                 return new JsonResponse("",404);
             }
