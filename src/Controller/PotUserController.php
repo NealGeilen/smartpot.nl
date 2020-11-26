@@ -8,10 +8,12 @@ use App\Entity\User;
 use App\Form\PotType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Serializer;
 
 class PotUserController extends AbstractController
 {
@@ -44,11 +46,20 @@ class PotUserController extends AbstractController
     /**
      * @Route("/pots/add", name="pots_add")
      */
-    public function add(Security $security): Response
+    public function add(Request $request, Security $security, Serializer $serializer): Response
     {
-        $user = $security->getUser();
+        if ($request->isXmlHttpRequest()){
+            $GivenId = $request->request->get("id", 00);
+            $Pot = $this->getDoctrine()->getManager()->getRepository(Pot::class)->findOneBy(["uuid" => $GivenId]);
+            if ($Pot instanceof Pot){
+                $Pot->setOwner($security->getUser());
+                $this->getDoctrine()->getManager()->flush();
+                return new JsonResponse($serializer->serialize($Pot, "json"), 202);
+            } else {
+                return new JsonResponse("",404);
+            }
+        }
         return $this->render('potUser/add.html.twig', [
-            "Pots" => $user->getPot(),
             'controller_name' => 'PotController',
         ]);
     }

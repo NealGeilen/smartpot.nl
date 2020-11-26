@@ -139,7 +139,7 @@ class Pot implements UserInterface
         return $this->Owner;
     }
 
-    public function setOwner(?User $Owner): self
+    public function setOwner(?UserInterface $Owner): self
     {
         $this->Owner = $Owner;
 

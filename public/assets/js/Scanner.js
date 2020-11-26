@@ -30,23 +30,23 @@ var Scanner = {
         this.scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         this.scanner.addListener('scan', function (content) {
             console.log(content)
-            // Scanner.VerifyTicket(content);
+            Scanner.Verify(content);
         });
         this.SelectCameras();
     },
-    VerifyTicket: function (sHash) {
+    Verify: function (sHash) {
         $.ajax({
-            url: ARURA_API_DIR + '/shop/event-validate.php?type=verify-ticket',
+            url: location.href,
             type: 'post',
             dataType: 'json',
             data: {
-              Hash: sHash
+              id: sHash
             },
             statusCode: {
                 404: function() {
                     Modals.Warning({
                         Title : "Niet juist",
-                        Message: "Ticket is niet legitiem"
+                        Message: "Geen pot gevonden"
                     })
                 },
                 500: function () {
@@ -54,18 +54,14 @@ var Scanner = {
                         Title: "Mislukt",
                         Message: "Er is een fout opgetreden"
                     })
-                },
-                409: function () {
-                    Modals.Warning({
-                        Title: "Al gescand",
-                        Message: "Dit ticket is al eerder gescand in de afgelopen 24 uur. Echter dit ticket is wel legitiem"
-                    })
                 }
             },
             success:function(response){
-                // addSuccessMessage("Ticket is juist");
-                Scanner.AddTicketToTable(response.data);
-                // endPageLoad();
+                console.log(response)
+                Modals.Success({
+                    Title: "Gelukt",
+                    Message: ""
+                })
             },
             error: function () {
                 endPageLoad();
