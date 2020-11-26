@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PotUserController extends AbstractController
 {
@@ -46,7 +47,7 @@ class PotUserController extends AbstractController
     /**
      * @Route("/pots/add", name="pots_add")
      */
-    public function add(Request $request, Security $security, Serializer $serializer): Response
+    public function add(Request $request, Security $security, SerializerInterface $serializer): Response
     {
         if ($request->isXmlHttpRequest()){
             $GivenId = $request->request->get("id", 00);

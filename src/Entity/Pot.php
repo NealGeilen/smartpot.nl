@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helpers\QRHelper;
 use App\Repository\PotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -201,5 +202,9 @@ class Pot implements UserInterface
 
     public function supportsClass(){
         return true;
+    }
+
+    public function getQrCode(){
+        return QRHelper::Create($this->getUuid());
     }
 }

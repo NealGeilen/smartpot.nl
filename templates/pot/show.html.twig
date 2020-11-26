@@ -32,6 +32,12 @@
                     <th>Name</th>
                     <td>{{ pot.Name }}</td>
                 </tr>
+                <tr>
+                    <th>QR Code</th>
+                    <td>
+                        <img src="{{ pot.getQrCode() }}" style="max-width: 100%">
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

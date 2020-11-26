@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pot;
 use App\Entity\User;
+use App\Helpers\QRHelper;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Uid\Uuid;
@@ -46,7 +47,7 @@ class PotAdminController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
         return $this->render('pot/new.html.twig', [
             "Pot" => $Pot,
-            "PotPassword" => $Password
+            "PotPassword" => $Password,
         ]);
     }
 

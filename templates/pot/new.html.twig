@@ -17,16 +17,24 @@
     </div>
     <div class="card">
         <div class="card-body bg-gradient-primary rounded text-white">
-            <table class="table table-light table-hover table-striped">
-                <tr>
-                    <th>AUTH-ID</th>
-                    <td>{{ Pot.uuid }}</td>
-                </tr>
-                <tr>
-                    <th>AUTH-TOKEN</th>
-                    <td>{{ PotPassword }}</td>
-                </tr>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-light table-hover table-striped">
+                    <tr>
+                        <th>AUTH-ID</th>
+                        <td>{{ Pot.uuid }}</td>
+                    </tr>
+                    <tr>
+                        <th>AUTH-TOKEN</th>
+                        <td>{{ PotPassword }}</td>
+                    </tr>
+                    <tr>
+                        <th>QR Code</th>
+                        <td>
+                            <img src="{{ Pot.getQrCode() }}" style="max-width: 100%">
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
