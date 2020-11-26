@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PotController!{% endblock %}
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('pots') }}">My Plant's</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Pot</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="card shadow plant-background plant-background-1">
+        <div class="card-body card-plant-body">
+            <video id="preview"></video>
+            <p id="scan-message" class="text-center"></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script src="/assets/vendor/Instascan/instascan.min.js"></script>
+<script src="/assets/js/Scanner.js"></script>
+{% endblock %}

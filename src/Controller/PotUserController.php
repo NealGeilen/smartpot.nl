@@ -41,6 +41,18 @@ class PotUserController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/pots/add", name="pots_add")
+     */
+    public function add(Security $security): Response
+    {
+        $user = $security->getUser();
+        return $this->render('potUser/add.html.twig', [
+            "Pots" => $user->getPot(),
+            'controller_name' => 'PotController',
+        ]);
+    }
+
 
 
     /**
