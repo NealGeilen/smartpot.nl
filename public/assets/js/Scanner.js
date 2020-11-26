@@ -56,11 +56,7 @@ var Scanner = {
                 }
             },
             success:function(response){
-                console.log(response)
-                Modals.Success({
-                    Title: "Gelukt",
-                    Message: ""
-                })
+                location.replace("/pot/"+response.id+"/settings")
             }
         });
     },
