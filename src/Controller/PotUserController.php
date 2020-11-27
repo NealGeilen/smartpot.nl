@@ -74,6 +74,14 @@ class PotUserController extends AbstractController
     {
         $pot = $this->getDoctrine()->getRepository(Pot::class)->find($id);
         if ($pot instanceof Pot){
+
+            if ($request->isXmlHttpRequest()){
+                $search =urlencode($request->query->get("search", ""));
+                $Response = json_decode(file_get_contents("https://trefle.io/api/v1/plants/search?token=kJqCyqUGvVLbrVzGLfA7ZbVioh4E2NtD5YfX9C0roBM&q={$search}"), true);
+                return new JsonResponse($Response["data"],202);
+            }
+
+
             if ($pot->getOwner()->getId() === $security->getUser()->getId()){
                 $form = $this->createForm(PotType::class, $pot);
 
