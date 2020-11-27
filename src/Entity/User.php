@@ -56,6 +56,11 @@ class User implements UserInterface
      */
     private $pot;
 
+    /**
+     * @ORM\Column(type="string", length=25, nullable=true, unique=true)
+     */
+    private $Token;
+
     public function __construct()
     {
         $this->pots = new ArrayCollection();
@@ -197,6 +202,18 @@ class User implements UserInterface
                 $pot->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->Token;
+    }
+
+    public function setToken(?string $Token): self
+    {
+        $this->Token = $Token;
 
         return $this;
     }
