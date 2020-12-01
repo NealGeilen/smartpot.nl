@@ -85,7 +85,6 @@ class PotUserController extends AbstractController
                     $pot->setUrl($request->request->get('url'));
 
                     $em->flush();
-
                 }
                 else {
                     $search = urlencode($request->query->get("search", ""));
@@ -93,8 +92,6 @@ class PotUserController extends AbstractController
                     return new JsonResponse($Response["data"],202);
                 }
             }
-
-
 
             if ($pot->getOwner()->getId() === $security->getUser()->getId()){
                 $form = $this->createForm(PotType::class, $pot);

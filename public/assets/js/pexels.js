@@ -33,6 +33,7 @@ const photos = async (value, page, perpage) => {
 
             const img = document.createElement("img");
             img.setAttribute("id", img_id);
+            img.setAttribute("class","image");
             img.addEventListener('click', update_url)
 
             img.src = photo.src.large;
@@ -42,13 +43,13 @@ const photos = async (value, page, perpage) => {
         });
     }else{
         const err = document.createElement("h2");
-        err.textContent = "Er ging iets fout!";
+        err.textContent = "Something went wrong / No images found!";
         app.appendChild(err)
     }
 }
-let value = "plant";
+let value = document.getElementById("pot_Name").value;
 let page = 1;
-let perpage = 36;
+let perpage = 24;
 
 function showPhotos(){
     const reset = document.querySelector(".row");
@@ -72,6 +73,16 @@ function update_url(url) {
         url: location.href,
         data: value
     });
+
+    swal({
+        title: 'Success',
+        text: 'Image saved',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonClass: 'btn btn-info'
+    }).then(
+        $(".plant-background").css("background-image", "url('"+url.target.src+"')")
+    )
 }
 
 photos(value,page,perpage);
