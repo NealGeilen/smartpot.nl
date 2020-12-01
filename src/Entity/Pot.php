@@ -52,6 +52,11 @@ class Pot implements UserInterface
      */
     private $Name;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url;
+
     public function __construct()
     {
         $this->potLogs = new ArrayCollection();
@@ -196,6 +201,18 @@ class Pot implements UserInterface
     public function setName(string $Name): self
     {
         $this->Name = $Name;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $Url): self
+    {
+        $this->url = $Url;
 
         return $this;
     }

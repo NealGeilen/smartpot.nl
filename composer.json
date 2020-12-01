@@ -45,7 +45,7 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "symfony/twig-pack": "v1.0.1",
-        "endroid/qr-code" : "^3"
+        "endroid/qr-code" : "^3",
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",

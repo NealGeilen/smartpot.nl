@@ -8,6 +8,12 @@
             <li class="breadcrumb-item active" aria-current="page">Settings: {{ Pot.name }}</li>
         </ol>
     </nav>
+
+    <style>
+        .col-1 {
+            margin-top: 10px ;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -17,12 +23,18 @@
                 Pot settings
             </h2>
             {{ form(form) }}
+
+            <button id="search" class="btn-primary btn" type="button">Zoek Foto</button>
         </div>
     </div>
-{% endblock %}
 
+    <div id="root">
+
+    </div>
+{% endblock %}
 
 {% block js %}
     <script src="{{ asset('assets/vendor/jquery-ui-1.12.1/jquery-ui.js') }}"></script>
     <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/pexels.js') }}"></script>
 {% endblock %}
