@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Device;
 use App\Entity\Pot;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,27 +46,31 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function supports(Request $request)
     {
-        return $request->headers->has('X-AUTH-TOKEN') || ($request->headers->has('X-AUTH-EMAIL') && $request->headers->has('X-AUTH-PASSWORD'));
+        return $request->headers->has('X-AUTH-TOKEN') || ($request->request->get('username') && $request->request->get('password'));
     }
 
     public function getCredentials(Request $request)
     {
         $credentials = [
             'TOKEN' => $request->headers->get('X-AUTH-TOKEN', null),
-            'EMAIL' => $request->headers->get('X-AUTH-EMAIL', null),
-            'PASSWORD' => $request->headers->get('X-AUTH-PASSWORD', null)
+            'USERNAME' => $request->request->get('username', null),
+            'PASSWORD' => $request->request->get('password', null)
         ];
         return $credentials;
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        $Device = $this->entityManager->getRepository(Device::class)->findOneBy(["Token"=> $credentials["TOKEN"]]);
 
-        $user = $this->entityManager->getRepository(Pot::class)->findOneBy(['uuid' => $credentials['id']]);
+        if ($Device instanceof Device){
+            return $Device->getUser();
+        }
 
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(["username" => $credentials["USERNAME"]]);
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Pot could not be found.');
+            throw new CustomUserMessageAuthenticationException('User could not be found.');
         }
 
         return $user;
@@ -73,7 +78,11 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['token']);
+        if (isset($credentials["PASSWORD"])){
+            return $this->passwordEncoder->isPasswordValid($user, $credentials["PASSWORD"]);
+        }
+        return true;
+
     }
 
     /**
@@ -81,7 +90,7 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
      */
     public function getPassword($credentials): ?string
     {
-        return $credentials['token'];
+        return null;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
@@ -93,11 +102,7 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $data = [
-            // you may want to customize or obfuscate the message first
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-
-            // or to translate this message
-            // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
         ];
 
         return new JsonResponse($data, 401);

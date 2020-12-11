@@ -57,14 +57,15 @@ class User implements UserInterface
     private $pot;
 
     /**
-     * @ORM\Column(type="string", length=25, nullable=true, unique=true)
+     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="User")
      */
-    private $Token;
+    private $devices;
 
     public function __construct()
     {
         $this->pots = new ArrayCollection();
         $this->pot = new ArrayCollection();
+        $this->devices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,14 +207,32 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getToken(): ?string
+    /**
+     * @return Collection|Device[]
+     */
+    public function getDevices(): Collection
     {
-        return $this->Token;
+        return $this->devices;
     }
 
-    public function setToken(?string $Token): self
+    public function addDevice(Device $device): self
     {
-        $this->Token = $Token;
+        if (!$this->devices->contains($device)) {
+            $this->devices[] = $device;
+            $device->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevice(Device $device): self
+    {
+        if ($this->devices->removeElement($device)) {
+            // set the owning side to null (unless already changed)
+            if ($device->getUser() === $this) {
+                $device->setUser(null);
+            }
+        }
 
         return $this;
     }
