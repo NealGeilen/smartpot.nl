@@ -8,21 +8,41 @@
             <li class="breadcrumb-item active" aria-current="page">Settings: {{ Pot.name }}</li>
         </ol>
     </nav>
+
+    <style>
+        .col-1 {
+            margin-top: 10px ;
+        }
+        #root {
+            padding: 25px;
+        }
+        .image:hover {
+            opacity: 0.5;
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    <div class="card shadow plant-background plant-background-1">
+    <div class="card shadow plant-background" style="background-image: url('{{ Pot.url }}')">
         <div class="card-body card-plant-body">
             <h2>
                 Pot settings
             </h2>
             {{ form(form) }}
+
+            <button id="search" class="btn-primary btn" type="button">Zoek Foto</button>
         </div>
+
+        <div id="root"></div>
     </div>
 {% endblock %}
-
 
 {% block js %}
     <script src="{{ asset('assets/vendor/jquery-ui-1.12.1/jquery-ui.js') }}"></script>
     <script src="{{ asset('assets/js/autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/pexels.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/sweetalert2/dist/sweetalert2.min.css') }}"></script>
 {% endblock %}
