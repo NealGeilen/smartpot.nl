@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Pot;
 use App\Entity\PotLog;
@@ -12,32 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class ApiController extends AbstractController
+/**
+ * @Route("/api/pot")
+ */
+class PotApiController extends AbstractController
 {
     /**
-     * @Route("/api", name="api")
-     */
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $aData = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json"), true);
-
-        if (json_last_error() !== JSON_ERROR_NONE){
-            return new JsonResponse("JSON NOT VALID", 400);
-        }
-        $string = file_get_contents('php://input');
-        $aResponse = json_decode($string, true);
-        $aData[] = $aResponse;
-        file_put_contents(__DIR__ . DIRECTORY_SEPARATOR ."data.json", json_encode($aData));
-
-
-
-
-
-        return new JsonResponse($aResponse);
-    }
-
-    /**
-     * @Route("/api/addData", name="api_addData")
+     * @Route("/addData", name="api_addData")
      */
     public function addData(Request $request,  EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
     {

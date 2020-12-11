@@ -56,10 +56,16 @@ class User implements UserInterface
      */
     private $pot;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="User")
+     */
+    private $devices;
+
     public function __construct()
     {
         $this->pots = new ArrayCollection();
         $this->pot = new ArrayCollection();
+        $this->devices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +201,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($pot->getOwner() === $this) {
                 $pot->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Device[]
+     */
+    public function getDevices(): Collection
+    {
+        return $this->devices;
+    }
+
+    public function addDevice(Device $device): self
+    {
+        if (!$this->devices->contains($device)) {
+            $this->devices[] = $device;
+            $device->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevice(Device $device): self
+    {
+        if ($this->devices->removeElement($device)) {
+            // set the owning side to null (unless already changed)
+            if ($device->getUser() === $this) {
+                $device->setUser(null);
             }
         }
 
