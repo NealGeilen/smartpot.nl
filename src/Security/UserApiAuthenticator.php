@@ -46,15 +46,19 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function supports(Request $request)
     {
-        return $request->headers->has('X-AUTH-TOKEN') || ($request->request->get('username') && $request->request->get('password'));
+        $string = file_get_contents('php://input');
+        $aResponse = json_decode($string, true);
+        return $request->headers->has('X-AUTH-TOKEN') || (isset($aResponse["username"]) && isset($aResponse["password"]));
     }
 
     public function getCredentials(Request $request)
     {
+        $string = file_get_contents('php://input');
+        $aResponse = json_decode($string, true);
         $credentials = [
             'TOKEN' => $request->headers->get('X-AUTH-TOKEN', null),
-            'USERNAME' => $request->request->get('username', null),
-            'PASSWORD' => $request->request->get('password', null)
+            'USERNAME' => $aResponse["username"],
+            'PASSWORD' => $aResponse["password"]
         ];
         return $credentials;
     }
