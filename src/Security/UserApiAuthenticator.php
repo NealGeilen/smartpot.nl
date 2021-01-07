@@ -53,13 +53,15 @@ class UserApiAuthenticator extends AbstractFormLoginAuthenticator implements Pas
 
     public function getCredentials(Request $request)
     {
-        $string = file_get_contents('php://input');
-        $aResponse = json_decode($string, true);
+        $aResponse = json_decode(file_get_contents('php://input'), true);
         $credentials = [
             'TOKEN' => $request->headers->get('X-AUTH-TOKEN', null),
-            'USERNAME' => $aResponse["username"],
-            'PASSWORD' => $aResponse["password"]
         ];
+        if (isset($aResponse["username"]) && isset($aResponse["password"])){
+            $credentials["USERNAME"] = $aResponse["username"];
+            $credentials["PASSWORD"] = $aResponse["password"];
+        }
+
         return $credentials;
     }
 
