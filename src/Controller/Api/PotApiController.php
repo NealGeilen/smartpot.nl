@@ -61,7 +61,7 @@ class PotApiController extends AbstractController
                     $entityManager->flush();
                     return new JsonResponse(["Log" => $serializer->serialize($PotLog, "json")],200);
                 } else {
-                    return new JsonResponse("Missing values", 400);
+                    return new JsonResponse("Missing values. Values given: " . $string, 400);
                 }
             }
         }
