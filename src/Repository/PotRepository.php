@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Pot;
 use App\Entity\PotLog;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -37,22 +38,21 @@ class PotRepository extends ServiceEntityRepository implements PasswordUpgraderI
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return Pot[] Returns an array of Pot objects
-    //  */
-    /*
-    public function findByExampleField($value)
+   /**
+    * @return Pot[] Returns an array of Pot objects
+    */
+    public function findByOwner(UserInterface $user)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select("p.Name", "p.url", "p.uuid", "p.id")
+            ->andWhere('p.Owner = :owner')
+            ->setParameter(":owner", $user->getId())
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Pot

@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Device;
 use App\Entity\Pot;
 use App\Entity\PotLog;
+use App\Repository\PotRepository;
 use App\Repository\RoomPointsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,9 +51,9 @@ class UserApiController extends AbstractController
     /**
      * @Route("/pot", name="user_pot")
      */
-    public function pot(Security $security, Request $request, SerializerInterface $serializer): Response
+    public function pot(Security $security, Request $request,PotRepository $potRepository,SerializerInterface $serializer): Response
     {
-        return new JsonResponse($serializer->serialize($security->getUser()->getPot(), "json"));
+        return new Response($serializer->serialize(["Data" => $potRepository->findByOwner($security->getUser())], "json"));
     }
 
 
